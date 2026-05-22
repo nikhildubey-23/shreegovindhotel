@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:is(.dark *));
+
+:root {
+  --gold: #C9A962;
+  --gold-light: #D4AF37;
+  --gold-soft: #E8D9A8;
+  --gold-deep: #B8860B;
+  --cream: #FDFBF7;
+  --cream-light: #FFFEF9;
+  --white: #FFFFFF;
+  --beige: #F5F0E8;
+  --beige-light: #FAF6F0;
+  --text-dark: #1A1A1A;
+  --text-medium: #4A4A4A;
+  --text-gray: #6B6B6B;
+  --border-light: #E5E0D8;
+  --border-medium: #D4CFC5;
+  --background: #FDFBF7;
+  --foreground: #1A1A1A;
+  --dark-bg: #06080D;
+  --dark-card: #0C101A;
+  --dark-elevated: #141A28;
+}
+
+.dark {
+  --gold: #C9A962;
+  --gold-light: #D4AF37;
+  --gold-soft: #E8D9A8;
+  --gold-deep: #B8860B;
+  --cream: #06080D;
+  --cream-light: #0C101A;
+  --white: #141A28;
+  --beige: #0C101A;
+  --beige-light: #141A28;
+  --text-dark: #EDE7E0;
+  --text-medium: #B8B0A8;
+  --text-gray: #7A746E;
+  --border-light: #1E2533;
+  --border-medium: #141A28;
+  --background: #06080D;
+  --foreground: #EDE7E0;
+  --dark-bg: #06080D;
+  --dark-card: #0C101A;
+  --dark-elevated: #141A28;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-soft: var(--gold-soft);
+  --color-cream: var(--cream);
+  --color-cream-light: var(--cream-light);
+  --color-white: var(--white);
+  --color-beige: var(--beige);
+  --color-beige-light: var(--beige-light);
+  --color-text-dark: var(--text-dark);
+  --color-text-medium: var(--text-medium);
+  --color-text-gray: var(--text-gray);
+  --color-border-light: var(--border-light);
+  --color-border-medium: var(--border-medium);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-image:
+    radial-gradient(ellipse at 15% 30%, rgba(201, 169, 98, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 0%, rgba(180, 134, 11, 0.03) 0%, transparent 50%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-cursive {
+  font-family: 'Dancing Script', cursive;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 169, 98, 0.15);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-dark {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 169, 98, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .glass {
+  background: rgba(22, 27, 34, 0.85);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.dark .glass-dark {
+  background: rgba(22, 27, 34, 0.95);
+  border: 1px solid rgba(201, 169, 98, 0.15);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(201, 169, 98, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 0 8px rgba(201, 169, 98, 0.3));
+  }
+  50% {
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(201, 169, 98, 0.6));
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(201, 169, 98, 0.2); }
+  50% { border-color: rgba(201, 169, 98, 0.6); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.animate-slow-spin {
+  animation: slowSpin 20s linear infinite;
+}
+
+.animate-border-glow {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-gold-pulse {
+  animation: goldPulse 3s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--beige-light);
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-soft);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 60px rgba(201, 169, 98, 0.12), 0 0 40px rgba(201, 169, 98, 0.05);
+}
+
+::selection {
+  background: var(--gold);
+  background: rgba(201, 169, 98, 0.3);
+  color: var(--text-dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark ::selection {
+  color: var(--text-dark);
+}
+
+/* Force white text in hero sections for dark mode */
+.dark section h1,
+.dark section p,
+.dark section span {
+  color: #ffffff;
+}
+
+.dark section .text-white,
+.dark section .text-white\/50,
+.dark section .text-white\/70,
+.dark section .text-white\/80 {
+  color: #ffffff !important;
+}
+
+/* Additional rules for hero text */
+html.dark section div[class*="z-"] h1,
+html.dark section div[class*="z-"] p,
+html.dark section div[class*="z-"] span {
+  color: #ffffff !important;
+}
