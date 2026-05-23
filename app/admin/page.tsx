@@ -70,23 +70,23 @@ export default function AdminPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#06080D] px-6">
+      <section className="min-h-screen flex items-center justify-center bg-[#06080D] px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-[#0C101A] border border-white/10 p-8 rounded-lg w-full max-w-sm"
         >
           <h1 className="text-2xl font-['Playfair_Display'] text-white mb-2">Admin Login</h1>
-          <p className="text-white text-sm mb-6">Enter password to access bookings</p>
+          <p className="text-white mb-6">Enter password to access bookings</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full bg-white/10 border border-white/20 text-white px-4 py-3 focus:border-[#C9A962] focus:outline-none transition-colors"
+              className="w-full bg-white/10 border border-white/20 text-white px-4 py-3 focus:border-[#C9A962] focus:outline-none transition-colors placeholder:text-white/50"
             />
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-300 text-sm">{error}</p>}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -97,23 +97,23 @@ export default function AdminPage() {
             </motion.button>
           </form>
         </motion.div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#06080D] pt-24 pb-16 px-6">
+    <section className="min-h-screen bg-[#06080D] pt-24 pb-16 px-6 text-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-['Playfair_Display'] text-white">Booking Admin Panel</h1>
-            <p className="text-white/70 text-sm mt-1">{bookings.length} total booking{bookings.length !== 1 ? "s" : ""}</p>
+            <p className="text-white mt-1">{bookings.length} total booking{bookings.length !== 1 ? "s" : ""}</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={fetchBookings}
-            className="border border-[#C9A962] text-[#C9A962] px-6 py-2 text-sm tracking-wider hover:bg-[#C9A962] hover:text-black transition-all duration-300"
+            className="border border-[#C9A962] text-white px-6 py-2 text-sm tracking-wider hover:bg-[#C9A962] hover:text-black transition-all duration-300"
           >
             REFRESH
           </motion.button>
@@ -122,11 +122,11 @@ export default function AdminPage() {
         {loading ? (
           <div className="text-center py-20">
             <div className="w-8 h-8 border-2 border-[#C9A962] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white/70">Loading bookings...</p>
+            <p className="text-white">Loading bookings...</p>
           </div>
         ) : bookings.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-white/70 text-lg">No bookings yet.</p>
+            <p className="text-white text-lg">No bookings yet.</p>
           </div>
         ) : (
           <div className="grid gap-6">
@@ -141,17 +141,17 @@ export default function AdminPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-white font-semibold text-lg">{booking.name}</h3>
-                    <p className="text-white/60 text-xs">{new Date(booking.created_at).toLocaleString()}</p>
+                    <p className="text-white text-xs">{new Date(booking.created_at).toLocaleString()}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="bg-[#C9A962]/20 text-[#C9A962] text-xs px-3 py-1 rounded-full">
+                    <span className="bg-[#C9A962]/20 text-white text-xs px-3 py-1 rounded-full">
                       ID: #{booking.id}
                     </span>
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={() => handleDelete(booking.id)}
-                      className="text-red-400 hover:text-red-300 text-xs"
+                      className="text-red-300 hover:text-red-200 text-xs"
                     >
                       Delete
                     </motion.button>
@@ -160,37 +160,37 @@ export default function AdminPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
-                    <span className="text-white/60 block">Phone</span>
+                    <span className="text-white block">Phone</span>
                     <span className="text-white">{booking.phone}</span>
                   </div>
                   {booking.email && (
                     <div>
-                      <span className="text-white/60 block">Email</span>
+                      <span className="text-white block">Email</span>
                       <span className="text-white">{booking.email}</span>
                     </div>
                   )}
                   <div>
-                    <span className="text-white/60 block">Guests</span>
+                    <span className="text-white block">Guests</span>
                     <span className="text-white">{booking.guests}</span>
                   </div>
                   <div>
-                    <span className="text-white/60 block">Room Type</span>
+                    <span className="text-white block">Room Type</span>
                     <span className="text-white">{booking.room_type || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-white/60 block">Check-in</span>
+                    <span className="text-white block">Check-in</span>
                     <span className="text-white">{booking.check_in || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-white/60 block">Check-out</span>
+                    <span className="text-white block">Check-out</span>
                     <span className="text-white">{booking.check_out || "—"}</span>
                   </div>
                 </div>
 
                 {booking.message && (
                   <div className="mt-3 pt-3 border-t border-white/10">
-                    <span className="text-white/60 text-xs block mb-1">Message</span>
-                    <p className="text-white/80 text-sm">{booking.message}</p>
+                    <span className="text-white text-xs block mb-1">Message</span>
+                    <p className="text-white text-sm">{booking.message}</p>
                   </div>
                 )}
               </motion.div>
@@ -198,6 +198,6 @@ export default function AdminPage() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
