@@ -8,6 +8,8 @@ import ScrollReveal from "@/components/ScrollReveal";
 import AnimatedText from "@/components/AnimatedText";
 
 export default function ContactPage() {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,25 +28,28 @@ export default function ContactPage() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    setSubmitMsg("");
 
-    
-    const whatsappNumber = "919893519481"; 
-
-    const text = `*New Booking Inquiry - Hotel Shri Govind*%0A%0A` +
-                 `*Name:* ${formData.name}%0A` +
-                 (formData.email ? `*Email:* ${formData.email}%0A` : "") +
-                 `*Phone:* ${formData.phone}%0A` +
-                 `*Guests:* ${formData.guests}%0A` +
-                 `*Check-in:* ${formData.checkIn}%0A` +
-                 `*Check-out:* ${formData.checkOut}%0A` +
-                 `*Room Type:* ${formData.roomType}%0A` +
-                 `*Message:* ${formData.message}`;
-
-   
-   const whatsappUrl = `https://wa.me/919893519481?text=${text}`;
-    window.open(whatsappUrl, "_blank");
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitMsg("Booking submitted! We'll contact you shortly.");
+        setFormData({ name: "", email: "", phone: "", checkIn: "", checkOut: "", roomType: "", guests: "1", message: "" });
+      } else {
+        setSubmitMsg(data.message || "Something went wrong. Try again.");
+      }
+    } catch {
+      setSubmitMsg("Network error. Please try again.");
+    }
+    setSubmitting(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -301,6 +306,10 @@ export default function ContactPage() {
               />
             </div>
 
+            {submitMsg && (
+              <p className="text-green-400 text-sm text-center">{submitMsg}</p>
+            )}
+
             <motion.button
               whileHover={{
                 scale: 1.02,
@@ -308,7 +317,8 @@ export default function ContactPage() {
               }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full gold-gradient text-white px-8 py-4 text-sm font-semibold tracking-[0.2em] shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden"
+              disabled={submitting}
+              className="w-full gold-gradient text-white px-8 py-4 text-sm font-semibold tracking-[0.2em] shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden disabled:opacity-50"
             >
               <motion.span
                 className="absolute inset-0 bg-white/20"
@@ -318,7 +328,7 @@ export default function ContactPage() {
               />
 
               <span className="relative z-10">
-                SUBMIT INQUIRY
+                {submitting ? "SUBMITTING..." : "SUBMIT INQUIRY"}
               </span>
             </motion.button>
           </form>

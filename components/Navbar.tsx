@@ -11,6 +11,7 @@ const navLinks = [
   { name: "Rooms", href: "/rooms" },
   { name: "Gallery", href: "/gallery" },
   { name: "Contact", href: "/contact" },
+
 ];
 
 export default function Navbar() {
