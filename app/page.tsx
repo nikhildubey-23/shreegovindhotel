@@ -20,199 +20,9 @@ import {
   highlights,
   rooms,
   galleryImages,
+  type Room,
 } from "@/lib/data";
 
-
-/* ═══════════════════════════════════════════════════════════════
-   CANVAS ANIMATED BACKGROUND (OPTIMIZED & SMOOTHENED)
-   - Left & Right side: Perfect, natural S-curves with cinematic glow
-   - Deep luxurious color tones (Subtle, balanced highlight)
-   - Smooth, fluid organic wave math
-═══════════════════════════════════════════════════════════════ */
-function GlobalAnimatedBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-    let t = 0;
-
-    function resize() {
-      if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener("resize", resize);
-
-    /* Clean neon-glow rendering using balanced layer widths and extremely low alphas */
-    function drawGlowCurve(
-      pts: [number, number, number, number, number, number, number, number],
-      color: string,
-      layers: { width: number; alpha: number }[]
-    ) {
-      if (!ctx) return;
-      const [x0, y0, cp1x, cp1y, cp2x, cp2y, x1, y1] = pts;
-      for (const { width, alpha } of layers) {
-        ctx.beginPath();
-        ctx.moveTo(x0, y0);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x1, y1);
-        ctx.strokeStyle = color.replace("A", String(alpha));
-        ctx.lineWidth = width;
-        ctx.lineCap = "round";
-        ctx.stroke();
-      }
-    }
-
-    // Isko aur soft kiya gaya hai taaki harsh lines na banein
-    const glowLayers = [
-      { width: 120, alpha: 0.02 }, // Ultra-wide soft ambient halo
-      { width: 60,  alpha: 0.05 }, // Mid soft blur
-      { width: 25,  alpha: 0.12 }, // Subtle core glow
-      { width: 10,  alpha: 0.25 }, // Definition line
-      { width: 3,   alpha: 0.40 }, // Soft sharp center core
-    ];
-
-    function draw() {
-      if (!canvas || !ctx) return;
-      const W = canvas.width;
-      const H = canvas.height;
-
-      ctx.clearRect(0, 0, W, H);
-
-      /* Elegant luxury dark background */
-      ctx.fillStyle = "#020308";
-      ctx.fillRect(0, 0, W, H);
-
-      /* Smoother, slow-paced oscillation constants for fluid movement */
-      const cosTime = Math.cos(t * 0.2);
-      const sinTime = Math.sin(t * 0.15);
-      
-      const waveLeft  = Math.sin(t * 0.25) * 0.015;
-      const waveRight = Math.cos(t * 0.2) * 0.015;
-
-      // Premium Deep Blue Sapphire Tone (Harsh Bright Blue ko control kiya hai yahan)
-      const luxuryBlue = "rgba(40, 75, 215, A)"; 
-
-      /* ── LEFT PERFECT S-CURVE ──────────────────────────────
-         Iske control points ko recalculate kiya gaya hai 
-         taaki pure curve flawless aur organic 'S' texture de. */
-      const lu_x0   = W * (-0.08 + waveLeft);
-      const lu_y0   = H * (-0.05);
-      const lu_cp1x = W * (0.22 + cosTime * 0.02);
-      const lu_cp1y = H * (0.25 + sinTime * 0.02);
-      const lu_cp2x = W * (-0.15 + sinTime * 0.03);
-      const lu_cp2y = H * (0.50 + cosTime * 0.01);
-      
-      const lu_x1   = W * (0.05 + waveLeft);
-      const lu_y1   = H * (0.70);
-
-      const ll_cp1x = W * (0.20 + sinTime * 0.02);
-      const ll_cp1y = H * (0.85);
-      const ll_cp2x = W * (-0.05);
-      const ll_cp2y = H * (0.95);
-      const ll_x1   = W * (0.02);
-      const ll_y1   = H * (1.05);
-
-      // Drawing seamless left S-Curve sequence
-      drawGlowCurve(
-        [lu_x0, lu_y0, lu_cp1x, lu_cp1y, lu_cp2x, lu_cp2y, lu_x1, lu_y1],
-        luxuryBlue,
-        glowLayers
-      );
-      drawGlowCurve(
-        [lu_x1, lu_y1, ll_cp1x, ll_cp1y, ll_cp2x, ll_cp2y, ll_x1, ll_y1],
-        luxuryBlue,
-        glowLayers
-      );
-
-
-      /* ── RIGHT DIAGONAL S-CURVE ────────────────────────────
-         Right side ke pure curve ko fluid mechanics di gayi hai 
-         jisse viewport change hone par bhi symmetry kharab na ho. */
-      const ru_x0   = W * (1.08 + waveRight);
-      const ru_y0   = H * (-0.05);
-      const ru_cp1x = W * (0.78 - sinTime * 0.02);
-      const ru_cp1y = H * (0.25 + cosTime * 0.02);
-      const ru_cp2x = W * (1.15 - cosTime * 0.02);
-      const ru_cp2y = H * (0.50 + sinTime * 0.01);
-      
-      const ru_x1   = W * (0.92 + waveRight);
-      const ru_y1   = H * (0.68);
-
-      const rl_cp1x = W * (0.75 - cosTime * 0.02);
-      const rl_cp1y = H * (0.82);
-      const rl_cp2x = W * (1.05);
-      const rl_cp2y = H * (0.95);
-      const rl_x1   = W * (0.98);
-      const rl_y1   = H * (1.05);
-
-      // Drawing seamless right S-Curve sequence
-      drawGlowCurve(
-        [ru_x0, ru_y0, ru_cp1x, ru_cp1y, ru_cp2x, ru_cp2y, ru_x1, ru_y1],
-        luxuryBlue,
-        glowLayers
-      );
-      drawGlowCurve(
-        [ru_x1, ru_y1, rl_cp1x, rl_cp1y, rl_cp2x, rl_cp2y, rl_x1, rl_y1],
-        luxuryBlue,
-        glowLayers
-      );
-
-
-      /* ── LUXURY AMBIENT BACKGROUND BLOBS ───────────────────
-         Background ke bade glow spots (blobs) ki strength kam ki hai
-         taaki dark mood bana rahe aur lines upar chalk out na karein. */
-      const lgLeft = ctx.createRadialGradient(
-        W * (0.0 + waveLeft), H * (0.5), 0,
-        W * (0.0 + waveLeft), H * (0.5), W * 0.5
-      );
-      lgLeft.addColorStop(0,   "rgba(20, 45, 140, 0.25)"); // Dropped opacity from 0.55
-      lgLeft.addColorStop(0.5, "rgba(10, 25, 80, 0.08)");
-      lgLeft.addColorStop(1,   "rgba(0,0,0,0)");
-      ctx.fillStyle = lgLeft;
-      ctx.fillRect(0, 0, W, H);
-
-      const lgRight = ctx.createRadialGradient(
-        W * (1.0 + waveRight), H * (0.4), 0,
-        W * (1.0 + waveRight), H * (0.4), W * 0.5
-      );
-      lgRight.addColorStop(0,   "rgba(20, 45, 140, 0.22)"); // Dropped opacity from 0.50
-      lgRight.addColorStop(0.5, "rgba(10, 25, 80, 0.06)");
-      lgRight.addColorStop(1,   "rgba(0,0,0,0)");
-      ctx.fillStyle = lgRight;
-      ctx.fillRect(0, 0, W, H);
-
-      t += 0.006; // Pehle yai 0.012 tha, ab speed half (0.006) kardi hai ultra smooth liquid feel ke liye
-      animId = requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: -1,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-      }}
-    />
-  );
-}
 
 /* ─────────────────────────────────────────────
    RoomImageSlider
@@ -328,6 +138,8 @@ function Counter({
    PAGE
 ═══════════════════════════════════════════════════════════════ */
 export default function Home() {
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -499,6 +311,7 @@ export default function Home() {
                     transition: { type: "spring", stiffness: 300, damping: 15 },
                   }}
                   className="group cursor-pointer rounded-lg overflow-hidden"
+                  onClick={() => setSelectedRoom(room)}
                 >
                   <div className="relative h-64 overflow-hidden">
                     <RoomImageSlider images={room.images} />
@@ -577,6 +390,130 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <AnimatePresence>
+        {selectedRoom && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setSelectedRoom(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="bg-[#0C101A] max-w-4xl w-full max-h-[95vh] overflow-y-auto rounded-lg shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative h-80 overflow-hidden">
+                <motion.div
+                  key={activeImageIndex}
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={selectedRoom.images[activeImageIndex]}
+                    alt={selectedRoom.type}
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
+                <motion.button
+                  onClick={() => setSelectedRoom(null)}
+                  whileHover={{ scale: 1.1, backgroundColor: "#C9A962", color: "#fff" }}
+                  className="absolute top-4 right-4 w-10 h-10 bg-[#141A28] rounded-full text-gray-200 transition-colors flex items-center justify-center text-xl"
+                >
+                  ×
+                </motion.button>
+                <div className="absolute bottom-4 left-4">
+                  <span className="bg-[#C9A962] text-white px-3 py-1 text-xs font-semibold">
+                    {selectedRoom.type}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex gap-3 p-4 justify-center bg-[#06080D] border-t border-[#1E2533]">
+                {selectedRoom.images.map((img, idx) => (
+                  <motion.button
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-24 h-20 relative rounded-lg overflow-hidden border-2 transition-all shadow-sm ${
+                      activeImageIndex === idx ? "border-[#C9A962] ring-2 ring-[#C9A962]/30" : "border-[#1E2533] hover:border-[#C9A962]"
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`View ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.button>
+                ))}
+              </div>
+
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h3 className="text-gray-100 font-['Playfair_Display'] text-3xl mb-1">
+                      {selectedRoom.type} Room
+                    </h3>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[#C9A962] text-4xl font-['Playfair_Display']">
+                      ₹{selectedRoom.price}
+                    </span>
+                    <span className="text-gray-400">/night</span>
+                  </div>
+                </div>
+
+                <p className="text-gray-300 mb-6">{selectedRoom.description}</p>
+
+                <div className="mb-8">
+                  <h4 className="text-gray-100 font-['Playfair_Display'] text-lg mb-3">
+                    Amenities
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {selectedRoom.amenities.map((amenity) => (
+                      <motion.div
+                        key={amenity}
+                        whileHover={{ scale: 1.05, borderColor: "#C9A962" }}
+                        className="flex items-center gap-2 text-sm text-gray-300 bg-[#141A28] px-4 py-2 rounded-lg border border-[#1E2533] transition-colors"
+                      >
+                        <span>{amenity}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                <Link href="/contact">
+                  <motion.button
+                    whileHover={{ scale: 1.02, boxShadow: "0 0 25px rgba(201,169,98,0.4)" }}
+                    whileTap={{ scale: 0.98 }}
+                    className="block text-center gold-gradient text-white px-8 py-4 text-sm font-semibold tracking-[0.2em] shadow-lg hover:shadow-xl transition-shadow rounded-sm relative overflow-hidden w-full"
+                  >
+                    <motion.span
+                      className="absolute inset-0 bg-white/20"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "100%" }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                    />
+                    <span className="relative z-10">BOOK THIS ROOM</span>
+                  </motion.button>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ══ FACILITIES ══ */}
       <section className="relative py-24 md:py-32 overflow-hidden">

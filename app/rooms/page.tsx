@@ -160,7 +160,7 @@ export default function RoomsPage() {
 
     <section className="relative py-10 md:py-10 overflow-hidden">
 
-  <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#06080D] via-[#0C101A] to-[#06080D]">
+  <div className="absolute inset-0">
     <motion.div
       animate={{ scale: [1, 1.3, 1], rotate: [0, -20, 0] }}
       transition={{ repeat: Infinity, duration: 11, ease: "easeInOut" }}
@@ -413,7 +413,7 @@ export default function RoomsPage() {
         )}
       </AnimatePresence>
 
-      <section className="py-24  bg-[#0C101A]">
+      <section className="py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="text-3xl md:text-4xl text-gray-100 mb-6">

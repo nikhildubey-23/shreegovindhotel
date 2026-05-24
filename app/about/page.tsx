@@ -111,7 +111,7 @@ export default function AboutPage() {
 
       <section className="relative py-24 md:py-32 overflow-hidden">
 
-  <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#06080D] via-[#0C101A] to-[#06080D]">
+  <div className="absolute inset-0">
     <motion.div
       animate={{ scale: [1, 1.2, 1], rotate: [0, 15, 0] }}
       transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
@@ -186,7 +186,7 @@ export default function AboutPage() {
   </div>
 </section>
 
-      <section className="py-20 px-6 md:px-10 bg-[#0C101A] relative overflow-hidden">
+      <section className="py-20 px-6 md:px-10 relative overflow-hidden">
   <motion.div
     animate={{ scale: [1, 1.1, 1], rotate: [0, 3, 0] }}
     transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}

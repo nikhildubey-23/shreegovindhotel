@@ -101,7 +101,7 @@ export default function GalleryPage() {
         </motion.div>
       </section>
 
-      <section className="py-16  bg-[#0C101A]">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -130,7 +130,7 @@ export default function GalleryPage() {
 
      <section className="relative py-10 md:py-10 overflow-hidden">
 
-  <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#06080D] via-[#0C101A] to-[#06080D]">
+  <div className="absolute inset-0">
     <motion.div
       animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
       transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
@@ -274,7 +274,7 @@ export default function GalleryPage() {
         )}
       </AnimatePresence>
 
-      <section className="py-24  bg-[#0C101A]">
+      <section className="py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="text-3xl md:text-4xl text-gray-100 mb-6">

@@ -117,7 +117,7 @@ export default function ContactPage() {
 
       <section className="relative py-24 md:py-32 overflow-hidden">
 
-  <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#06080D] via-[#0C101A] to-[#06080D]">
+  <div className="absolute inset-0">
     <motion.div
       animate={{ scale: [1, 1.3, 1], rotate: [0, 25, 0] }}
       transition={{ repeat: Infinity, duration: 13, ease: "easeInOut" }}
@@ -493,7 +493,7 @@ export default function ContactPage() {
 </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-[#0C101A]">
+      <section className="py-16">
   <div className="max-w-7xl mx-auto px-6">
     <ScrollReveal>
       <div className="glass overflow-hidden relative group rounded-xl">
