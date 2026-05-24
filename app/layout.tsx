@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GoldenEmbers from "@/components/GoldenEmbers";
+import CosmoBackground from "@/components/CosmoBackground";
 
 export const metadata: Metadata = {
   title: "Hotel O Shri Govind - A Luxury Hotel",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body>
+        <CosmoBackground />
         <GoldenEmbers />
         <Navbar />
         <main>{children}</main>
