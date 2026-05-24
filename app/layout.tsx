@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ParticleWaveBackground from "@/components/ParticleWaveBackground";
+import GoldenEmbers from "@/components/GoldenEmbers";
 
 export const metadata: Metadata = {
   title: "Hotel O Shri Govind - A Luxury Hotel",
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body>
-        <ParticleWaveBackground />
+        <GoldenEmbers />
         <Navbar />
         <main>{children}</main>
         <Footer />
