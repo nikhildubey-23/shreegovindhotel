@@ -75,7 +75,7 @@ export default function GoldenEmbers() {
         }
         scene.add(spokeGroup);
 
-        const smallGears: { group: THREE.Group; angle: number; speed: number; radius: number }[] = [];
+        const smallGears: { group: any; angle: number; speed: number; radius: number }[] = [];
         for (let i = 0; i < 3; i++) {
           const gGroup = new THREE.Group();
           const gRing = new THREE.Mesh(
